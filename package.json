@@ -1,20 +1,9 @@
 {
   "name": "generator-bic-angular",
   "version": "2.0.13",
-  "description": "Yeoman generator for creating MEAN stack applications, using MongoDB, Express, AngularJS, and Node (adaptado para a empresa BIC)",
+  "description": "Yeoman generator for BIC",
   "keywords": [
-    "yeoman-generator",
-    "mean",
-    "mongodb",
-    "angularjs",
-    "express",
-    "scaffold",
-    "fullstack",
-    "framework",
-    "component",
-    "front-end",
-    "bic",
-    "app"
+    "bic"
   ],
   "homepage": "https://github.com/byteincoffee/generator-bic-angular",
   "bugs": "https://github.com/byteincoffee/generator-bic-angular/issues",
