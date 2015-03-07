@@ -29,6 +29,8 @@
     "diacritic": "0.0.2",
     "express-cors": "0.0.3",
     "gm": "^1.17.0",
+    "connect-multiparty": "^1.2.5",
+    "mongoose-nested-set": "0.0.7",
     "mongoose-created-at": "^1.0.1",
     "mongoose-updated-at": "^1.0.2",
     "mongoose-pagination": "^1.0.0",

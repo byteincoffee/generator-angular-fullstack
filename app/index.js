@@ -243,13 +243,13 @@ var AngularFullstackGenerator = yeoman.generators.Base.extend({
       "'ngCookies'",
       "'ngResource'",
       "'ngSanitize'",
-      'angular-spinkit',
-      'trNgGrid',
-      'cgNotify',
-      'eyesight',
-      'ngCkeditor',
-      'ui.tree',
-      'angularFileUpload',
+      "'angular-spinkit'",
+      "'trNgGrid'",
+      "'cgNotify'",
+      "'eyesight'",
+      "'ngCkeditor'",
+      "'ui.tree'",
+      "'angularFileUpload'",
     ];
     if(this.filters.ngroute) angModules.push("'ngRoute'");
     if(this.filters.socketio) angModules.push("'btford.socket-io'");

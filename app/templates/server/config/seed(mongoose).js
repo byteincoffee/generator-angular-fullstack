@@ -83,6 +83,4 @@ User.findOne({email: 'test@test.com'}).remove(function () {
   }, function () {
     console.log('Criando usuário test...');
   });
-});
-
 });<% } %>
