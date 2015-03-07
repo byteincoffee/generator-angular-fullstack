@@ -2,24 +2,32 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var Diacritics = require('diacritic');
 var crypto = require('crypto');<% if(filters.oauth) { %>
 var authTypes = ['github', 'twitter', 'facebook', 'google'];<% } %>
 
 var UserSchema = new Schema({
-  name: String,
-  email: { type: String, lowercase: true },
+  name: {type: String, required: true},
+  nameNormalized: {type: String, index: true, lowercase: true, trim: true},
+  email: {type: String, lowercase: true, unique: true},
   role: {
     type: String,
     default: 'user'
   },
   hashedPassword: String,
   provider: String,
+  picture: String,
+  socialLink: String,
+  active: {type: Boolean, default: true},
   salt: String<% if (filters.oauth) { %>,<% if (filters.facebookAuth) { %>
   facebook: {},<% } %><% if (filters.twitterAuth) { %>
   twitter: {},<% } %><% if (filters.googleAuth) { %>
   google: {},<% } %>
   github: {}<% } %>
 });
+
+UserSchema.plugin(require('mongoose-created-at'));
+UserSchema.plugin(require('mongoose-updated-at'));
 
 /**
  * Virtuals
@@ -105,6 +113,10 @@ UserSchema
       next(new Error('Invalid password'));
     else
       next();
+  })
+  .pre('save', function (next) {
+    this.nameNormalized = Diacritics.clean(this.name);
+    next();
   });
 
 /**

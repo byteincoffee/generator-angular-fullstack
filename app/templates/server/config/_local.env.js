@@ -18,6 +18,17 @@ module.exports = {
   GOOGLE_ID: 'app-id',
   GOOGLE_SECRET: 'secret',
 <% } %>
+
+  AWS_ID:     'app-id',
+  AWS_SECRET: 'secret',
+
+  ADMIN_NAME :      'Admin',
+  ADMIN_EMAIL :     'admin@admin.com',
+  ADMIN_PASSWORD :  'admin',
+
+  MAILER_USER :     'admin@admin.com',
+  MAILER_PASS :     'admin',
+
   // Control debug level for modules using visionmedia/debug
   DEBUG: ''
 };

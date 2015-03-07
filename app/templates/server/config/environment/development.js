@@ -8,5 +8,11 @@ module.exports = {
     uri: 'mongodb://localhost/<%= _.slugify(appname) %>-dev'
   },
 
-  seedDB: true
+  seedDB: true,
+
+  aws: {
+    s3: {
+      prefixKey: '.tmp/'
+    }
+  }
 };

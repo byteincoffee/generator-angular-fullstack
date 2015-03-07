@@ -18,10 +18,13 @@ var passport = require('passport');<% } %><% if (filters.twitterAuth) { %>
 var session = require('express-session');
 var mongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');<% } %>
+//var cors = require('express-cors');
+require('mongoose-pagination');
 
 module.exports = function(app) {
   var env = app.get('env');
 
+  //app.use(cors({allowedOrigins: ['*']}));
   app.set('views', config.root + '/server/views');<% if (filters.html) { %>
   app.engine('html', require('ejs').renderFile);
   app.set('view engine', 'html');<% } %><% if (filters.jade) { %>

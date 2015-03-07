@@ -9,4 +9,7 @@ var ThingSchema = new Schema({
   active: Boolean
 });
 
+ThingSchema.plugin(require('mongoose-created-at'));
+ThingSchema.plugin(require('mongoose-updated-at'));
+
 module.exports = mongoose.model('Thing', ThingSchema);

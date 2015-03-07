@@ -6,6 +6,9 @@
 'use strict';
 
 var Thing = require('../api/thing/thing.model');
+var File = require('../api/file/file.model');
+var Folder = require('../api/folder/folder.model');
+
 <% if (filters.auth) { %>var User = require('../api/user/user.model');<% } %>
 
 Thing.find({}).remove(function() {
@@ -30,20 +33,56 @@ Thing.find({}).remove(function() {
   });
 });<% if (filters.auth) { %>
 
-User.find({}).remove(function() {
+Folder.find({}).remove(function () {
+  Folder.create({
+    name: 'root',
+    root: true
+  }, function (err, root) {
+    Folder.create({
+      name: 'Dev',
+      parentId: root._id
+    }, function (err, folder) {
+      File.find({}).remove(function () {
+        File.create({
+          name: "batman.jpg",
+          type: "image/jpeg",
+          url: "https://byteincoffee.s3.amazonaws.com/.tmp%2F1424693677475-%5Bobject+Object%5D",
+          width: 300,
+          height: 300,
+          folder: folder._id,
+          filters: [{
+            name: "thumb-batman.jpg",
+            url: "https://byteincoffee.s3.amazonaws.com/.tmp%2F1424693676458-thumb-batman.jpg",
+            type: "image/jpeg",
+            filter: "thumb",
+            width: 300,
+            height: 300
+          }, {
+            name: "thumb-batman.jpg",
+            url: "https://byteincoffee.s3.amazonaws.com/.tmp%2F1424693676458-thumb-batman.jpg",
+            type: "image/jpeg",
+            filter: "maxHeight",
+            width: 300,
+            height: 300
+          }],
+          "active": true
+        }, function () {
+          console.log('Cadastrando Arquivos');
+        });
+      })
+    });
+  });
+});
+
+User.findOne({email: 'test@test.com'}).remove(function () {
   User.create({
     provider: 'local',
     name: 'Test User',
     email: 'test@test.com',
     password: 'test'
-  }, {
-    provider: 'local',
-    role: 'admin',
-    name: 'Admin',
-    email: 'admin@admin.com',
-    password: 'admin'
-  }, function() {
-      console.log('finished populating users');
-    }
-  );
+  }, function () {
+    console.log('Criando usuário test...');
+  });
+});
+
 });<% } %>
