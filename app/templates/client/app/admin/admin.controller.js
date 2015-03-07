@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('wtApp')
+angular.module('<%= scriptAppName %>')
   .controller('AdminCtrl', function ($scope, Auth, $state, UI) {
     $scope.ui = UI;
     $scope.isLoggedIn = Auth.isLoggedIn;

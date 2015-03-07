@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('wtApp')
+angular.module('<%= scriptAppName %>')
   .config(function ($stateProvider) {
     $stateProvider
       .state('admin.user', {

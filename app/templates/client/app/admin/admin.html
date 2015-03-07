@@ -10,7 +10,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" ui-sref="main.home">WT Admin</a>
+        <a class="navbar-brand" ui-sref="main.home"><%= scriptAppName %> Admin</a>
       </div>
       <ul class="nav navbar-right top-nav">
         <li ng-show='ui.isLoading()'>
@@ -37,17 +37,11 @@
           <li data-to-top ng-class="{active: menuIsActive('admin.dashboard')}">
             <a ui-sref="admin.dashboard"><i class="fa fa-fw fa-dashboard"></i> Área de Trabalho</a>
           </li>
-          <li data-to-top ng-class="{active: menuIsActive('admin.place')}">
-            <a ui-sref="admin.place"><i class="fa fa-fw fa-globe"></i> Locais</a>
-          </li>
           <li data-to-top ng-class="{active: menuIsActive('admin.user')}">
             <a ui-sref="admin.user"><i class="fa fa-fw fa-users"></i> Usuários</a>
           </li>
           <li data-to-top ng-class="{active: menuIsActive('admin.media')}">
             <a ui-sref="admin.media"><i class="fa fa-fw fa-folder-open"></i> Mídias</a>
-          </li>
-          <li data-to-top ng-class="{active: menuIsActive('admin.chat')}">
-            <a ui-sref="admin.chat"><i class="fa fa-fw fa-weixin"></i> Chat</a>
           </li>
           <li data-to-top ng-class="{active: menuIsActive('admin.thing')}" ng-if="getCurrentUser().role === 'root'">
             <a ui-sref="admin.thing"><i class="fa fa-fw fa-table"></i> Coisas</a>

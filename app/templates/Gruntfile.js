@@ -830,6 +830,19 @@ module.exports = function (grunt) {
     'usemin'
   ]);
 
+  grunt.registerTask('deploy', [
+    'default',
+    'buildcontrol:heroku'
+  ]);
+
+  grunt.registerTask('heroku', [
+    'buildcontrol:heroku'
+  ]);
+
+  grunt.registerTask('debug', [
+    'serve:debug'
+  ]);
+
   grunt.registerTask('default', [
     'newer:jshint',
     'test',

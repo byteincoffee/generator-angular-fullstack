@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('wtApp')
+angular.module('<%= scriptAppName %>')
   .directive('goBack', [function () {
     return {
       restrict: 'A',

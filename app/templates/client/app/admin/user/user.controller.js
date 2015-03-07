@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('wtApp')
+angular.module('<%= scriptAppName %>')
   .controller('UserCtrl', function ($scope, User, $stateParams, $location) {
     $scope.users = User.query();
     $scope.user = {};

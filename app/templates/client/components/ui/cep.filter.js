@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('wtApp')
+angular.module('<%= scriptAppName %>')
   .filter('cep', function () {
     return function (cep) {
       if (!cep) {

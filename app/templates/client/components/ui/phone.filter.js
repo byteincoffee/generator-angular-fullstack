@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('wtApp')
+angular.module('<%= scriptAppName %>')
   .filter('phone', function () {
     return function (phone) {
       if (!phone) {

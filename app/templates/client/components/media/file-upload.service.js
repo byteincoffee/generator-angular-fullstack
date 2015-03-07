@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('wtApp')
+angular.module('<%= scriptAppName %>')
   .factory('FileUpload', function ($upload) {
     var uploadProgress = [];
     var uploading = false;

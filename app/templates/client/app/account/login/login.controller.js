@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('wtApp')
+angular.module('<%= scriptAppName %>')
   .controller('LoginCtrl', function ($scope, Auth, $state, $window) {
     $scope.user = {};
     $scope.errors = {};

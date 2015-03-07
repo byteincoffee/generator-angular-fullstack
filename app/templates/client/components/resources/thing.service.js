@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('wtApp')
+angular.module('<%= scriptAppName %>')
   .factory('Thing', function ($resource) {
     return $resource('/api/things/:id/:controller', {
         id: '@_id'

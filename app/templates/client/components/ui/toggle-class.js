@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('wtApp')
+angular.module('<%= scriptAppName %>')
   .directive('toggleClass', function () {
     return {
       restrict: 'A',

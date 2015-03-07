@@ -2,17 +2,30 @@
 'use strict';
 
 angular.module('<%= scriptAppName %>')
-  .factory('socket', function(socketFactory) {
+  .factory('socket', function (socketFactory, Auth, $state) {
 
+    var ioSocket = null;
     // socket.io now auto-configures its connection when we ommit a connection url
-    var ioSocket = io('', {
-      // Send auth token on connection, you will need to DI the Auth service above
-      // 'query': 'token=' + Auth.getToken()
-      path: '/socket.io-client'
-    });
+    if (Auth.getToken()) {
+      ioSocket = io('', {
+        // Send auth token on connection, you will need to DI the Auth service above
+        query: 'token=' + Auth.getToken(),
+        path: '/socket.io-client-auth'
+      });
+    } else {
+      ioSocket = io('', {
+        path: '/socket.io-client'
+      });
+    }
 
     var socket = socketFactory({
       ioSocket: ioSocket
+    });
+
+    socket.on('error', function (error) {
+      if (error.type === 'UnauthorizedError' || error.code === 'invalid_token') {
+        $state.go('login');
+      }
     });
 
     return {

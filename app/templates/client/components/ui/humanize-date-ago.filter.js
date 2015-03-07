@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('wtApp')
+angular.module('<%= scriptAppName %>')
   .filter('humanizeDateAgo', function ($window) {
     var pad = function (number) {
       if (number < 10) {

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('wtApp')
+angular.module('<%= scriptAppName %>')
   .factory('SEO', function ($location, $window) {
     return {
       title: function (title) {

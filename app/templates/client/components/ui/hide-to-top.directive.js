@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('wtApp')
+angular.module('<%= scriptAppName %>')
   .directive('hideToTop', function () {
     return {
       restrict: 'A',

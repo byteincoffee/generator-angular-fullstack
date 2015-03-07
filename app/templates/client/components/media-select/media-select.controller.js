@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('wtApp')
+angular.module('<%= scriptAppName %>')
   .controller('MediaSelectCtrl', function ($scope, $modalInstance, UI, File, Folder, FileUpload) {
     $scope.ui = UI;
     $scope.treedata = [];

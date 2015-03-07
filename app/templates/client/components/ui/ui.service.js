@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('wtApp')
+angular.module('<%= scriptAppName %>')
   .service('UI', function ($timeout, $window, notify) {
     this.alerts = [];
     this.loader = false;
