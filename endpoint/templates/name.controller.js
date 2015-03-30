@@ -6,7 +6,7 @@ var <%= classedName %> = require('./<%= name %>.model');<% } %>
 // Get list of <%= name %>s
 exports.index = function(req, res) {<% if (!filters.mongoose) { %>
   res.json([]);<% } %><% if (filters.mongoose) { %>
-  <%= classedName %>.find(function (err, <%= name %>s) {
+  <%= classedName %>.find({deleted: false}).exec(function (err, <%= name %>s) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(<%= name %>s);
   });<% } %>
@@ -14,7 +14,7 @@ exports.index = function(req, res) {<% if (!filters.mongoose) { %>
 
 // Get a single <%= name %>
 exports.show = function(req, res) {
-  <%= classedName %>.findById(req.params.id).exec(function (err, <%= name %>) {
+  <%= classedName %>.findOne({_id: req.params.id, deleted: false}).exec(function (err, <%= name %>) {
     if(err) { return handleError(res, err); }
     if(!<%= name %>) { return res.status(404).send('Not Found'); }
     return res.status(200).json(<%= name %>);

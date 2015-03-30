@@ -35,7 +35,7 @@ exports.index = function(req, res) {<% if (!filters.mongoose) { %>
   info : 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators'
   }
   ]);<% } %><% if (filters.mongoose) { %>
-  Thing.find(function (err, things) {
+  Thing.find({deleted: false}, function (err, things) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(things);
   });<% } %>
@@ -43,7 +43,7 @@ exports.index = function(req, res) {<% if (!filters.mongoose) { %>
 
 // Get a single thing
 exports.show = function(req, res) {
-  Thing.findById(req.params.id, function (err, thing) {
+  Thing.findOne({_id: req.params.id, deleted: false}, function (err, thing) {
     if(err) { return handleError(res, err); }
     if(!thing) { return res.status(404).send('Not Found'); }
     return res.json(thing);
@@ -77,7 +77,7 @@ exports.destroy = function(req, res) {
   Thing.findById(req.params.id, function (err, thing) {
     if(err) { return handleError(res, err); }
     if(!thing) { return res.status(404).send('Not Found'); }
-    thing.remove(function(err) {
+    thing.delete(function(err) {
       if(err) { return handleError(res, err); }
       return res.status(204).send('No Content');
     });
