@@ -2,14 +2,15 @@
 
 angular.module('<%= scriptAppName %>')
   .controller('UserCtrl', function ($scope, User, $stateParams, $location) {
-    $scope.users = User.query();
+    $scope.users = User.queryAdmin({role: 'admin'});
     $scope.user = {};
+    $scope.errors = {};
 
     $scope.edit = function (user) {
       $scope.ui.loading();
       var userId = (_.isObject(user)) ? user._id : user;
       $location.search('id', userId);
-      User.get({id: userId}, function (user) {
+      User.getAdmin({id: userId}, function (user) {
         $scope.user = user;
         $scope.ui.loaded();
       }, function (err) {
@@ -27,6 +28,7 @@ angular.module('<%= scriptAppName %>')
 
     $scope.save = function (form) {
       if (form.$valid) {
+        $scope.preSave($scope.user, form);
         $scope.submitted = true;
         if ($scope.user._id) {
           $scope.update($scope.user);
@@ -36,9 +38,13 @@ angular.module('<%= scriptAppName %>')
       }
     };
 
+    $scope.preSave = function (user) {
+      user.role = 'admin';
+    };
+
     $scope.update = function (user) {
       $scope.ui.loading();
-      user.$update(function () {
+      user.$updateAdmin(function () {
         $scope.submitted = false;
         $scope.ui.loaded();
         var index = _.findIndex($scope.users, {_id: user._id});
@@ -54,7 +60,7 @@ angular.module('<%= scriptAppName %>')
 
     $scope.create = function (userNew, form) {
       $scope.ui.loading();
-      User.save(userNew, function (user) {
+      User.saveAdmin(userNew, function (user) {
         $scope.clear(form);
         $scope.ui.alert('Adicionado com sucesso!', 'success');
         $scope.submitted = false;
@@ -65,7 +71,13 @@ angular.module('<%= scriptAppName %>')
         $scope.submitted = false;
         $scope.ui.loaded();
         $scope.ui.alert('Não foi possível adicionar o registro!', 'danger');
-        console.log(err);
+        err = err.data;
+        $scope.errors = {};
+
+        angular.forEach(err.errors, function (error, field) {
+          form[field].$setValidity('mongoose', false);
+          $scope.errors[field] = error.message;
+        });
       });
     };
 

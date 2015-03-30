@@ -19,7 +19,7 @@ exports.setup = function (User, config) {
             if (!user) {
               user = new User({
                 name: profile.displayName,
-                picture: profile._json.picture,
+                picture: profile._json.picture || profile._json.image.url.replace('?sz=50', '?sz=300'),
                 email: profile.emails[0].value,
                 role: 'user',
                 provider: 'google',
@@ -29,7 +29,7 @@ exports.setup = function (User, config) {
             } else {
               user.facebook = {};
               user.google = profile._json;
-              user.picture = profile._json.picture;
+              user.picture = profile._json.picture || profile._json.image.url.replace('?sz=50', '?sz=300');
               user.provider = 'google';
               user.socialLink = profile._json.link;
             }
@@ -42,7 +42,7 @@ exports.setup = function (User, config) {
           });
         } else {
           user.google = profile._json;
-          user.picture = profile._json.picture;
+          user.picture = profile._json.picture || profile._json.image.url.replace('?sz=50', '?sz=300');
           user.socialLink = profile._json.link;
           user.save(function (err) {
             if (err) {

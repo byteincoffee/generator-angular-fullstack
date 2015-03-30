@@ -63,7 +63,7 @@ function filters() {
     filter: function (file, cb) {
       gm(file.path)
         .resize(null, '800')
-        .quality(100)
+        .quality(80)
         .stream(function (err, stdout, stderr) {
           if (err) {
             return cb(err);

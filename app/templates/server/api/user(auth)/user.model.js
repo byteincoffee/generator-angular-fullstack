@@ -3,8 +3,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Diacritics = require('diacritic');
-var crypto = require('crypto');<% if(filters.oauth) { %>
-var authTypes = ['github', 'twitter', 'facebook', 'google'];<% } %>
+var crypto = require('crypto');
+var authTypes = ['github', 'twitter', 'facebook', 'google'];
 
 var UserSchema = new Schema({
   name: {type: String, required: true},
@@ -18,7 +18,6 @@ var UserSchema = new Schema({
   provider: String,
   picture: String,
   socialLink: String,
-  active: {type: Boolean, default: true},
   salt: String<% if (filters.oauth) { %>,<% if (filters.facebookAuth) { %>
   facebook: {},<% } %><% if (filters.twitterAuth) { %>
   twitter: {},<% } %><% if (filters.googleAuth) { %>
@@ -28,25 +27,26 @@ var UserSchema = new Schema({
 
 UserSchema.plugin(require('mongoose-created-at'));
 UserSchema.plugin(require('mongoose-updated-at'));
+UserSchema.plugin(require('mongoose-delete'));
 
 /**
  * Virtuals
  */
 UserSchema
   .virtual('password')
-  .set(function(password) {
+  .set(function (password) {
     this._password = password;
     this.salt = this.makeSalt();
     this.hashedPassword = this.encryptPassword(password);
   })
-  .get(function() {
+  .get(function () {
     return this._password;
   });
 
 // Public profile information
 UserSchema
   .virtual('profile')
-  .get(function() {
+  .get(function () {
     return {
       'name': this.name,
       'role': this.role
@@ -56,7 +56,7 @@ UserSchema
 // Non-sensitive info we'll be putting in the token
 UserSchema
   .virtual('token')
-  .get(function() {
+  .get(function () {
     return {
       '_id': this._id,
       'role': this.role
@@ -70,35 +70,35 @@ UserSchema
 // Validate empty email
 UserSchema
   .path('email')
-  .validate(function(email) {<% if (filters.oauth) { %>
-    if (authTypes.indexOf(this.provider) !== -1) return true;<% } %>
+  .validate(function (email) {
+    if (authTypes.indexOf(this.provider) !== -1) return true;
     return email.length;
-  }, 'Email cannot be blank');
+  }, 'E-mail não pode ficar em branco.');
 
 // Validate empty password
 UserSchema
   .path('hashedPassword')
-  .validate(function(hashedPassword) {<% if (filters.oauth) { %>
-    if (authTypes.indexOf(this.provider) !== -1) return true;<% } %>
+  .validate(function (hashedPassword) {
+    if (authTypes.indexOf(this.provider) !== -1) return true;
     return hashedPassword.length;
-  }, 'Password cannot be blank');
+  }, 'Senha não pode ficar em branco.');
 
 // Validate email is not taken
 UserSchema
   .path('email')
-  .validate(function(value, respond) {
+  .validate(function (value, respond) {
     var self = this;
-    this.constructor.findOne({email: value}, function(err, user) {
-      if(err) throw err;
-      if(user) {
-        if(self.id === user.id) return respond(true);
+    this.constructor.findOne({email: value}, function (err, user) {
+      if (err) throw err;
+      if (user) {
+        if (self.id === user.id) return respond(true);
         return respond(false);
       }
       respond(true);
     });
-}, 'The specified email address is already in use.');
+  }, 'Este e-mail já está em uso.');
 
-var validatePresenceOf = function(value) {
+var validatePresenceOf = function (value) {
   return value && value.length;
 };
 
@@ -106,11 +106,11 @@ var validatePresenceOf = function(value) {
  * Pre-save hook
  */
 UserSchema
-  .pre('save', function(next) {
+  .pre('save', function (next) {
     if (!this.isNew) return next();
 
-    if (!validatePresenceOf(this.hashedPassword)<% if (filters.oauth) { %> && authTypes.indexOf(this.provider) === -1<% } %>)
-      next(new Error('Invalid password'));
+    if (!validatePresenceOf(this.hashedPassword) && authTypes.indexOf(this.provider) === -1)
+      next(new Error('Senha inválida,'));
     else
       next();
   })
@@ -130,7 +130,7 @@ UserSchema.methods = {
    * @return {Boolean}
    * @api public
    */
-  authenticate: function(plainText) {
+  authenticate: function (plainText) {
     return this.encryptPassword(plainText) === this.hashedPassword;
   },
 
@@ -140,7 +140,7 @@ UserSchema.methods = {
    * @return {String}
    * @api public
    */
-  makeSalt: function() {
+  makeSalt: function () {
     return crypto.randomBytes(16).toString('base64');
   },
 
@@ -151,7 +151,7 @@ UserSchema.methods = {
    * @return {String}
    * @api public
    */
-  encryptPassword: function(password) {
+  encryptPassword: function (password) {
     if (!password || !this.salt) return '';
     var salt = new Buffer(this.salt, 'base64');
     return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');

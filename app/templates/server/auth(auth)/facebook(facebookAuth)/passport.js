@@ -23,7 +23,7 @@ exports.setup = function (User, config) {
               if (!user) {
                 user = new User({
                   name: profile.displayName,
-                  picture: 'http://graph.facebook.com/' + profile.id + '/picture?width=300',
+                  picture: 'http://graph.facebook.com/' + profile.id + '/picture?width=300&height=300',
                   email: profile.emails[0].value,
                   role: 'user',
                   provider: 'facebook',
@@ -33,7 +33,7 @@ exports.setup = function (User, config) {
               } else {
                 user.google = {};
                 user.facebook = profile._json;
-                user.picture = 'http://graph.facebook.com/' + profile.id + '/picture?width=300';
+                user.picture = 'http://graph.facebook.com/' + profile.id + '/picture?width=300&height=300';
                 user.provider = 'facebook';
                 user.socialLink = profile._json.link;
               }
@@ -47,7 +47,7 @@ exports.setup = function (User, config) {
             });
           } else {
             user.facebook = profile._json;
-            user.picture = 'http://graph.facebook.com/' + profile.id + '/picture?width=300';
+            user.picture = 'http://graph.facebook.com/' + profile.id + '/picture?width=300&height=300';
             user.socialLink = profile._json.link;
             user.save(function (err) {
               if (err) {

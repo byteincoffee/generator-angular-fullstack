@@ -14,10 +14,10 @@ exports.index = function(req, res) {<% if (!filters.mongoose) { %>
 
 // Get a single <%= name %>
 exports.show = function(req, res) {
-  <%= classedName %>.findById(req.params.id, function (err, <%= name %>) {
+  <%= classedName %>.findById(req.params.id).exec(function (err, <%= name %>) {
     if(err) { return handleError(res, err); }
     if(!<%= name %>) { return res.status(404).send('Not Found'); }
-    return res.json(<%= name %>);
+    return res.status(200).json(<%= name %>);
   });
 };
 
@@ -48,7 +48,7 @@ exports.destroy = function(req, res) {
   <%= classedName %>.findById(req.params.id, function (err, <%= name %>) {
     if(err) { return handleError(res, err); }
     if(!<%= name %>) { return res.status(404).send('Not Found'); }
-    <%= name %>.remove(function(err) {
+    <%= name %>.delete(function(err) {
       if(err) { return handleError(res, err); }
       return res.status(204).send('No Content');
     });
