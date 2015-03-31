@@ -12,6 +12,7 @@ module.exports = {
 
   aws: {
     s3: {
+      bucket: 'byteincoffee',
       prefixKey: '.tmp/'
     }
   }
