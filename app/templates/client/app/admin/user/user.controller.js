@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('<%= scriptAppName %>')
+angular.module('maykellApp')
   .controller('UserCtrl', function ($scope, User, $stateParams, $location) {
-    $scope.users = User.queryAdmin({role: 'admin'});
+    $scope.users = User.queryAdmin();
     $scope.user = {};
     $scope.errors = {};
 
@@ -10,6 +10,7 @@ angular.module('<%= scriptAppName %>')
       $scope.ui.loading();
       var userId = (_.isObject(user)) ? user._id : user;
       $location.search('id', userId);
+
       User.getAdmin({id: userId}, function (user) {
         $scope.user = user;
         $scope.ui.loaded();
@@ -18,6 +19,7 @@ angular.module('<%= scriptAppName %>')
         $scope.ui.loaded();
         console.log(err);
       });
+
     };
 
     $scope.clear = function (form) {
