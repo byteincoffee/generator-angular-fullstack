@@ -29,7 +29,7 @@ var all = {
 
   // Secret for session, you will want to change this and make it an environment variable
   secrets: {
-    session: process.env.SESSION_SECRET || '<%= _.slugify(_.humanize(appname)) + '-secret' %>'
+    session: process.env.SESSION_SECRET || 'maykell-secret'
   },
 
   // List of user roles
@@ -49,12 +49,23 @@ var all = {
     }
   },
 
+  contact: {
+    to: '',
+    subject: 'Contato feito pelo site',
+    body: '<p>Nome: %name%</p><p>Email: %email%</p><p>Mensagem: %message%</p>',
+  },
+
+  recaptcha: {
+    clientID: process.env.RECAPTCHA_ID || 'id',
+    clientSecret: process.env.RECAPTCHA_SECRET || 'secret'
+  },
+
   aws: {
     id: process.env.AWS_ID || 'id',
     secret: process.env.AWS_SECRET || 'secret',
     s3: {
-      bucket: '<%= _.slugify(_.humanize(appname)) + '-secret' %>',
-      prefixKey: 'app/'
+      bucket: '',
+      prefixKey: 'site/'
     }
   },
 
@@ -66,24 +77,7 @@ var all = {
       }
     }
   },
-<% if(filters.facebookAuth) { %>
-  facebook: {
-    clientID:     process.env.FACEBOOK_ID || 'id',
-    clientSecret: process.env.FACEBOOK_SECRET || 'secret',
-    callbackURL:  (process.env.DOMAIN || '') + '/auth/facebook/callback'
-  },
-<% } %><% if(filters.twitterAuth) { %>
-  twitter: {
-    clientID:     process.env.TWITTER_ID || 'id',
-    clientSecret: process.env.TWITTER_SECRET || 'secret',
-    callbackURL:  (process.env.DOMAIN || '') + '/auth/twitter/callback'
-  },
-<% } %><% if(filters.googleAuth) { %>
-  google: {
-    clientID:     process.env.GOOGLE_ID || 'id',
-    clientSecret: process.env.GOOGLE_SECRET || 'secret',
-    callbackURL:  (process.env.DOMAIN || '') + '/auth/google/callback'
-  }<% } %>
+
 };
 
 // Export the config object based on the NODE_ENV

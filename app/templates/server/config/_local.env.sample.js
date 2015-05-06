@@ -7,16 +7,7 @@
 
 module.exports = {
   DOMAIN:           'http://localhost:9000',
-  SESSION_SECRET:   '<%= _.slugify(appname) + "-secret" %>',<% if (filters.facebookAuth) { %>
-
-  FACEBOOK_ID:      'app-id',
-  FACEBOOK_SECRET:  'secret',<% } if (filters.twitterAuth) { %>
-
-  TWITTER_ID:       'app-id',
-  TWITTER_SECRET:   'secret',<% } if (filters.googleAuth) { %>
-
-  GOOGLE_ID:        'app-id',
-  GOOGLE_SECRET:    'secret',<% } %>
+  SESSION_SECRET:   'maykell-secret',
 
 
   AWS_ID:     'app-id',
@@ -28,6 +19,9 @@ module.exports = {
 
   MAILER_USER :     'admin@admin.com',
   MAILER_PASS :     'admin',
+
+  RECAPTCHA_ID: 'app-id',
+  RECAPTCHA_SECRET: 'secret',
 
   // Control debug level for modules using visionmedia/debug
   DEBUG: ''
